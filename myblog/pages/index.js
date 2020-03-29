@@ -7,6 +7,7 @@ import Advert from '../components/Advert'
 import '../static/style/pages/index.css'
 
 
+
 const Home = function () {
   const [mylist, setMylist] = useState(
     [
