@@ -6,13 +6,15 @@ import Head from 'next/head'
 import { Row, Col, Affix, Icon, Breadcrumb } from 'antd'
 import ReactMarkdown from 'react-markdown'
 import MarkNav from 'markdown-navbar';
-import 'markdown-navbar/dist/navbar.css';
+
+import axios from 'axios'
 
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import '../static/style/pages/detailed.css'
+import 'markdown-navbar/dist/navbar.css';
 
 
 const Detailed = function () {
@@ -111,5 +113,23 @@ const Detailed = function () {
     </>
   )
 }
+
+//初始拉值
+Detailed.getInitialProps = async(context)=>{
+  let id =context.query.id
+  const promise = new Promise((resolve)=>{
+
+    axios('http://127.0.0.1:7001/default/getArticleById/'+id).then(
+      (res)=>{
+        console.log(res)
+        // resolve(res.data.data[0])
+        resolve('hah')
+      }
+    )
+  })
+
+  return await promise
+}
+
 
 export default Detailed

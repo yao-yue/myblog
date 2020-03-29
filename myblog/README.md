@@ -9,3 +9,9 @@
 1. yarn add @zeit/next-css   支持css
 2. yarn add antd  babel-plugin-import  
 3. 书籍目录导航 markdown-navbar
+
+
+### 小感悟
+自己写后台这些接口才明白为什么前端要路由封装
+1. 用promise包装,统一报错检验.
+2. 方便统一修改,比如开发环境切换到线上环境的ip修改.

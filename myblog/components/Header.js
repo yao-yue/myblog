@@ -3,7 +3,6 @@ import '../static/style/components/header.css'
 
 // 测试专用 等下删除
 import Link from 'next/link'
-import Router from 'next/router'
 // 
 
 import {Row,Col, Menu, Icon} from 'antd'

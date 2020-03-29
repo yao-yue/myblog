@@ -6,11 +6,11 @@ import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import '../static/style/pages/index.css'
-
+import Link from 'next/link'
 
 
 const Home = function (list) {
-  const [ mylist , setMylist ] = useState(list.data);
+  const [mylist, setMylist] = useState(list.data);
 
   return (
     <>
@@ -26,14 +26,16 @@ const Home = function (list) {
               itemLayout="vertical"
               dataSource={mylist}
               renderItem={item => (
-                <List.Item>
-                  <div className="list-title">{item.title}</div>
+                <List.Item key={item.id}>
+                  <div className="list-title">
+                    <Link href={{pathname:'/detailed', query:{id: item.id}}}><a>{item.title}</a></Link>
+                    </div>
                   <div className="list-icon">
-                    <span><Icon type="calendar" /> 2019-06-28</span>
-                    <span><Icon type="folder" /> 视频教程</span>
-                    <span><Icon type="fire" /> 5498人</span>
+                    <span><Icon type="calendar" /> {item.addTime}</span>
+                    <span><Icon type="folder" /> {item.typeName}</span>
+                    <span><Icon type="fire" /> {item.view_count}人</span>
                   </div>
-                  <div className="list-context">{item.context}</div>
+                  <div className="list-context">{item.introduce}</div>
                 </List.Item>
               )}
             />
@@ -51,10 +53,10 @@ const Home = function (list) {
 
 }
 
-Home.getInitialProps = async ()=>{
-  const promise = new Promise((resolve)=>{
+Home.getInitialProps = async () => {
+  const promise = new Promise((resolve) => {
     axios('http://127.0.0.1:7001/default/getArticleList').then(
-      (res)=>{
+      (res) => {
         //console.log('远程获取数据结果:',res.data.data)
         resolve(res.data)
       }
