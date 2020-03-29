@@ -1,13 +1,14 @@
 {
   "name": "egg-middle-service",
   "version": "1.0.0",
-  "description": "egg做博客系统的服务端，也称中台",
+  "description": "博客系统的服务端，也叫中台",
   "private": true,
   "egg": {
     "declarations": true
   },
   "dependencies": {
     "egg": "^2.15.1",
+    "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.11.0"
   },
   "devDependencies": {

@@ -11,8 +11,8 @@ const Header = () => (
   <div className="header">
     <Row type="flex" justify="center">
         <Col  xs={24} sm={24} md={10} lg={15} xl={12}>
-            <span className="header-logo">技术胖</span>
-            <span className="header-txt">专注前端开发,每年100集免费视频。</span>
+            <span className="header-logo">ripple_h</span>
+            <span className="header-txt">专注前端开发,每个月赚一百万。</span>
         </Col>
 
         <Col className="memu-div" xs={0} sm={0} md={14} lg={8} xl={6}>

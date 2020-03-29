@@ -67,3 +67,19 @@ test文件夹：测试使用的配合文件，这个在测试时会使用。
 eslinttrc和eslintignore：代码格式化的配置文件。
 gitgnore：git设置忽略管理的配置文件。
 package.json： 包管理和命令配置文件，这个文件经常进行配置。
+
+
+### restful
+对URI(资源)的操作，请求get\post\put\delete
+
+### API接口的路由配置
+admin 管理端的所有API接口
+default 客户端使用的所有API接口
+路由也要分成前后端分离的，所以在app文件夹下新建一个router文件夹
+
+### mysql
+在安装完成以后，还不能正常使用，egg.js要求我们对于外部模块在plugin.js中进行配置
+
+### 关于安装到开发依赖还是生产依赖可能会产生坑
+-S    --save     
+-D    --save-dev
