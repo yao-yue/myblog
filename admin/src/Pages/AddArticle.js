@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import marked from 'marked'
+import axios from 'axios'
+import servicePath from '../config/apiUrl'
 import '../static/css/AddArticle.css'
-import { Row, Col, Input, Select, Button, DatePicker } from 'antd'
+import { Row, Col, Input, Select, Button, DatePicker,message } from 'antd'
+
 
 const { Option } = Select;
 const { TextArea } = Input
-import axios from 'axios'
-import servicePath from '../config/apiUrl'
 
 
-function AddArticle() {
+
+function AddArticle(props) {
     const [articleId, setArticleId] = useState(0)  // 文章的ID，如果是0说明是新增加，如果不是0，说明是修改
     const [articleTitle, setArticleTitle] = useState('')   //文章标题
     const [articleContent, setArticleContent] = useState('')  //markdown的编辑内容
@@ -48,7 +50,6 @@ function AddArticle() {
 
     //从中台得到文章类别信息
     const getTypeInfo = () => {
-
         axios({
             method: 'get',
             url: servicePath.getTypeInfo,
@@ -56,7 +57,7 @@ function AddArticle() {
             withCredentials: true
         }).then(
             res => {
-                if (res.data.data == "没有登录") {
+                if (res.data.status === "401") {
                     localStorage.removeItem('openId')
                     props.history.push('/')
                 } else {
@@ -120,7 +121,7 @@ function AddArticle() {
         dataProps.addTime = (new Date(datetext).getTime()) / 1000
 
         //调用api
-        if (articleId == 0) {
+        if (articleId === 0) {
             console.log('articleId=:' + articleId)
             dataProps.view_count = Math.ceil(Math.random() * 100) + 1000
             axios({

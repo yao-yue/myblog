@@ -1,4 +1,4 @@
-import React, { useState,useEffect, createContext} from 'react';
+import React, { useState,useEffect } from 'react';
 import 'antd/dist/antd.css';
 import '../static/css/Login.css';
 import { Card, Input, Button, Spin ,message } from 'antd';
@@ -8,7 +8,7 @@ import {
 
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
-const openIdContext = createContext()
+// const openIdContext = createContext()
 
 function Login(props) {
     const [userName, setUserName] = useState('')
@@ -31,7 +31,7 @@ function Login(props) {
             return false
         }
         let dataProps = {
-            'userName': userName,
+            'username': userName,
             'password': password
         }
         axios({

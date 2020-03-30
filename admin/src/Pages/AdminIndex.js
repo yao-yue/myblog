@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route } from "react-router-dom";
+import { Route ,Link} from "react-router-dom";
 import AddArticle from './AddArticle'
 import ArticleList from './ArticleList'
 import { Layout, Menu, Breadcrumb } from 'antd';
@@ -12,17 +12,16 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-function AdminIndex() {
+function AdminIndex(props) {
 
   const [collapsed, setCollapsed] = useState(false)
-
   const onCollapse = collapsed => {
     setCollapsed(collapsed)
   };
 
   const handleClickArticle = e=>{
     console.log(e.item.props)
-    if(e.key=='addArticle'){
+    if(e.key==='addArticle'){
       props.history.push('/index/add')
     }else{
       props.history.push('/index/list')
@@ -41,14 +40,14 @@ function AdminIndex() {
           </Menu.Item>
           <Menu.Item key="2">
             <SmileOutlined />
-            <span>添加文章</span>
+            <span><Link to="/index/list">文章列表</Link></span>
           </Menu.Item>
           <SubMenu
             key="sub1"
             onClick={handleClickArticle}
             title={
               <span>
-                <Icon type="desktop" />
+                <SmileOutlined />
                 <span>文章管理</span>
               </span>
             }
@@ -83,7 +82,6 @@ function AdminIndex() {
       </Layout>
     </Layout>
   )
-
 }
 
 export default AdminIndex

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../static/css/ArticleList.css'
-import { List, Row, Col, Modal, message, Button, Switch } from 'antd';
+import { List, Row, Col, Modal, message, Button} from 'antd';
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
 const { confirm } = Modal;
@@ -33,7 +33,7 @@ function ArticleList(props) {
             title: '确定要删除这篇博客文章吗?',
             content: '如果你点击OK按钮，文章将会永远被删除，无法恢复。',
             onOk() {
-                axios(servicePath.delArticle + id, { withCredentials: true }).then(
+                axios(servicePath.delArticle + id, { withCredentials: true ,method:'delete'}).then(
                     res => {
                         message.success('文章删除成功')
                         getList()
@@ -49,7 +49,6 @@ function ArticleList(props) {
     //修改文章
     const updateArticle = (id, checked) => {
         props.history.push('/index/add/' + id)
-
     }
 
     return (
@@ -108,5 +107,6 @@ function ArticleList(props) {
         </div>
     )
 }
+
 
 export default ArticleList

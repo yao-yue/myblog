@@ -45,9 +45,6 @@ class MainController extends Controller {
         const tmpArticle = this.ctx.request.body
         const id = this.ctx.params.id
         tmpArticle.id = id
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-        console.log(tmpArticle)
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
         let updateSQL = `update article set type_id=?,title=?,article_content=?,introduce=?,addTime=?,view_count=? where id=?`
         const result = await this.app.mysql.query(updateSQL, Object.values(tmpArticle));
         const updateSuccess = !!(result.affectedRows === 1)
@@ -73,9 +70,6 @@ class MainController extends Controller {
     async delArticle() {
         let id = this.ctx.params.id
         const res = await this.app.mysql.delete('article', { 'id': id })
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-        console.log(res)
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
         const delSuccess = !!(res.affectedRows === 1)
         const msg = res.changedRows === 0? 'no this article': 'success'
         this.ctx.body = { delSuccess,msg }
