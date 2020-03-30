@@ -31,8 +31,8 @@ class MainController extends Controller {
     //添加文章
     async addArticle() {
         let tmpArticle = this.ctx.request.body
-        const result = await this.app.mysql.insert('article', tmpArticle)
-        const insertSuccess = result.affectedRows === 1
+        const result = await this.app.mysql.query('insert into article (type_id,title,article_content,introduce,addTime,view_count) values (?,?,?,?,?,?)', Object.values(tmpArticle))
+        const insertSuccess = !!(result.affectedRows === 1)
         const insertId = result.insertId
         this.ctx.body = {
             isSuccess: insertSuccess,
@@ -42,13 +42,17 @@ class MainController extends Controller {
 
     //修改文章
     async updateArticle() {
-        let tmpArticle = this.ctx.request.body
-
-        const result = await this.app.mysql.update('article', tmpArticle);
-        const updateSuccess = result.affectedRows === 1;
-        console.log(updateSuccess)
+        const tmpArticle = this.ctx.request.body
+        const id = this.ctx.params.id
+        tmpArticle.id = id
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        console.log(tmpArticle)
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        let updateSQL = `update article set type_id=?,title=?,article_content=?,introduce=?,addTime=?,view_count=? where id=?`
+        const result = await this.app.mysql.query(updateSQL, Object.values(tmpArticle));
+        const updateSuccess = !!(result.affectedRows === 1)
         this.ctx.body = {
-            isScuccess: updateSuccess
+            isScuccess: updateSuccess,
         }
     }
 
@@ -69,7 +73,12 @@ class MainController extends Controller {
     async delArticle() {
         let id = this.ctx.params.id
         const res = await this.app.mysql.delete('article', { 'id': id })
-        this.ctx.body = { data: res }
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        console.log(res)
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        const delSuccess = !!(res.affectedRows === 1)
+        const msg = res.changedRows === 0? 'no this article': 'success'
+        this.ctx.body = { delSuccess,msg }
     }
 
     //根据文章ID得到文章详情，用于修改文章
