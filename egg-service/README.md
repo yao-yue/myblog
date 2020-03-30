@@ -92,3 +92,7 @@ default 客户端使用的所有API接口
 ### 一个小问题 
 我把请求数据放在-x-www-form-urlencoded能在request.body里拿到数据
 放在form-data里拿不到， 他们之间的区别是啥
+
+### 中台路由守卫
+守卫方法是通过egg.js中间件来实现，验证session成功，就会用await next()向下接力，如果验证失败就返回未登录。
+正常情况下前后台是不能共享session的，但是在config.default.js里配置credentials:true ---开启跨域携带cookie

@@ -40,7 +40,7 @@ module.exports = appInfo => {
   config.cors = {
     // origin: '*',
     origin: 'http://localhost:3000',
-    credentials: true,
+    credentials: true,   //允许跨域携带cookie
     allowMethods: 'GET,HEAD,PUT,DELETE,PATCH.OPTIONS'
   }
 
