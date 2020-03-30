@@ -28,8 +28,10 @@ const Home = function (list) {
               itemLayout="vertical"
               dataSource={mylist}
               renderItem={item => (
-                <List.Item key={item.id}>
-                  <div className="list-title">{item.title}</div>
+                <List.Item>
+                  <div className="list-title">
+                    {/* 不能直接在Link里面使用文字导航  要加一个a标签 */}
+                    <Link href={{pathname:'/detailed',query:{id:item.id}}}><a>{item.title}</a></Link></div>
                   <div className="list-icon">
                     <span><StarFilled /> {item.addTime}</span>
                     <span><StarFilled /> {item.typeName}</span>

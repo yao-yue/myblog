@@ -9,6 +9,8 @@
 1. yarn add @zeit/next-css   支持css
 2. yarn add antd  babel-plugin-import  
 3. 书籍目录导航 markdown-navbar
+4. 关于markdown处理的包  marked+highlight.js。这个方案是比较成熟的，目前公司的开发文档程序就是基于这个开发的
+
 
 
 ### 小感悟

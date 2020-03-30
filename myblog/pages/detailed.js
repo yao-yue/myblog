@@ -1,12 +1,22 @@
 //详细页做主要的一点是对Markdown语法的解析。
 // react-markdown react-markdown是react专用的markdown解析组件 yarn add引入这个包
+//react-markdown的配置太少了还是换回 marked+highlight
+
 
 import React, { useState } from 'react'
 import Head from 'next/head'
 import { Row, Col, Affix, Breadcrumb } from 'antd'
 import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
-import ReactMarkdown from 'react-markdown'
-import MarkNav from 'markdown-navbar';
+
+//处理markdown
+// import ReactMarkdown from 'react-markdown'; //wasted
+import marked from 'marked'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css'
+
+//生成文章目录
+// import MarkNav from 'markdown-navbar'; //wasted
+import Tocify from '../components/tocify.tsx'
 
 import axios from 'axios'
 
@@ -18,8 +28,9 @@ import '../static/style/pages/detailed.css'
 import 'markdown-navbar/dist/navbar.css';
 
 
-const Detailed = function () {
-  let markdown = '# P01:课程介绍和环境搭建\n' +
+
+const Detailed = function (props) {
+  let articleContent = '# P01:课程介绍和环境搭建\n' +
     '[ **M** ] arkdown + E [ **ditor** ] = **Mditor**  \n' +
     '> Mditor 是一个简洁、易于集成、方便扩展、期望舒服的编写 markdown 的编辑器，仅此而已... \n\n' +
     '**这是加粗的文字**\n\n' +
@@ -53,6 +64,33 @@ const Detailed = function () {
     '>> bbbbbbbbb\n' +
     '>>> cccccccccc\n\n' +
     '``` var a=11; ```'
+  // let articleContent = props.article_content
+
+
+  const renderer = new marked.Renderer();
+  const tocify = new Tocify()
+
+  //配置marked
+  //参考文档https://marked.js.org/#/USING_ADVANCED.md#highlight
+  marked.setOptions({
+    renderer: renderer, //这个是必须填写的，你可以通过自定义的Renderer渲染出自定义的格式
+    gfm: true,          //启动类似Github样式的Markdown,填写true或者false
+    pedantic: false,     //只解析符合Markdown定义的，不修正Markdown的错误。填写true或者false
+    sanitize: false,    //原始输出，忽略HTML标签，这个作为一个开发人员，一定要写flase
+    tables: true,       //支持Github形式的表格，必须打开gfm选项
+    breaks: false,      //支持Github换行符，必须打开gfm选项，填写true或者false
+    smartLists: true,   //优化列表输出，这个填写ture之后，你的样式会好看很多，所以建议设置成ture
+    smartypants: false,
+    highlight: function (code) {  //高亮显示规则 ，这里我们将使用highlight.js来完成
+      return hljs.highlightAuto(code).value;
+    }
+  })
+  //设置heading,重新定义对#标签的解析
+  renderer.heading = function (text, level, raw) {
+    const anchor = tocify.add(text, level);
+    return `<a id="${anchor}" href="#${anchor}" class="anchor-fix"><h${level}>${text}</h${level}></a>\n`;
+  };
+  let html = marked(articleContent)
 
   return (
     <>
@@ -66,27 +104,24 @@ const Detailed = function () {
             <div className="bread-div">
               <Breadcrumb>
                 <Breadcrumb.Item><a href="/">首页</a></Breadcrumb.Item>
-                <Breadcrumb.Item>视频列表</Breadcrumb.Item>
-                <Breadcrumb.Item>xxxx</Breadcrumb.Item>
+                <Breadcrumb.Item>{props.typeName}</Breadcrumb.Item>
+                <Breadcrumb.Item>{props.title}</Breadcrumb.Item>
               </Breadcrumb>
             </div>
 
             <div>
               <div className="detailed-title">
-                React实战视频教程-技术胖Blog开发(更新08集)
+                {props.title}
                 </div>
 
               <div className="list-icon center">
-                <span><StarFilled /> 2019-06-28</span>
-                <span><StarFilled /> 视频教程</span>
-                <span><StarFilled /> 5498人</span>
+              <span><StarFilled /> {props.addTime}</span>
+              <span><StarFilled /> {props.typeName}</span>
+              <span><StarFilled /> {props.view_count}人</span>
               </div>
 
-              <div className="detailed-content" >
-                <ReactMarkdown
-                  source={markdown}
-                  escapeHtml={false}
-                />
+              <div className="detailed-content" 
+                    dangerouslySetInnerHTML = {{__html:html}} >
               </div>
 
             </div>
@@ -100,11 +135,9 @@ const Detailed = function () {
           <Affix offsetTop={5}>
             <div className="detailed-nav comm-box">
               <div className="nav-title">文章目录</div>
-              <MarkNav
-                className="article-menu"
-                source={markdown}
-                ordered={false}
-              />
+              <div className="toc-list">
+                {tocify && tocify.render()}
+              </div>
             </div>
           </Affix>
         </Col>
@@ -116,15 +149,14 @@ const Detailed = function () {
 }
 
 //初始拉值
-Detailed.getInitialProps = async(context)=>{
-  let id =context.query.id
-  const promise = new Promise((resolve)=>{
+Detailed.getInitialProps = async (context) => {
+  let id = context.query.id
+  const promise = new Promise((resolve) => {
 
-    axios('http://127.0.0.1:7001/default/getArticleById/'+id).then(
-      (res)=>{
-        console.log(res)
-        // resolve(res.data.data[0])
-        resolve('hah')
+    axios('http://127.0.0.1:7001/default/getArticleById/' + id).then(
+      (res) => {
+        // console.log(res)
+        resolve(res.data.data[0])
       }
     )
   })
