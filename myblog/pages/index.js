@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import axios from 'axios'
-import { Row, Col, List, Icon } from 'antd'
+import { Row, Col, List } from 'antd'
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import '../static/style/pages/index.css'
+import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
 import Link from 'next/link'
 
 
@@ -21,27 +22,26 @@ const Home = function (list) {
       <Row className="comm-main" type="flex" justify="center">
         <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={14}  >
           <div>
+
             <List
               header={<div>最新日志</div>}
               itemLayout="vertical"
               dataSource={mylist}
               renderItem={item => (
                 <List.Item key={item.id}>
-                  <div className="list-title">
-                    <Link href={{pathname:'/detailed', query:{id: item.id}}}><a>{item.title}</a></Link>
-                    </div>
+                  <div className="list-title">{item.title}</div>
                   <div className="list-icon">
-                    <span><Icon type="calendar" /> {item.addTime}</span>
-                    <span><Icon type="folder" /> {item.typeName}</span>
-                    <span><Icon type="fire" /> {item.view_count}人</span>
+                    <span><StarFilled /> {item.addTime}</span>
+                    <span><StarFilled /> {item.typeName}</span>
+                    <span><StarFilled /> {item.view_count}人</span>
                   </div>
                   <div className="list-context">{item.introduce}</div>
                 </List.Item>
               )}
             />
+
           </div>
         </Col>
-
         <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
           <Author />
           <Advert />

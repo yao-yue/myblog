@@ -3,7 +3,8 @@
 
 import React, { useState } from 'react'
 import Head from 'next/head'
-import { Row, Col, Affix, Icon, Breadcrumb } from 'antd'
+import { Row, Col, Affix, Breadcrumb } from 'antd'
+import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
 import ReactMarkdown from 'react-markdown'
 import MarkNav from 'markdown-navbar';
 
@@ -76,9 +77,9 @@ const Detailed = function () {
                 </div>
 
               <div className="list-icon center">
-                <span><Icon type="calendar" /> 2019-06-28</span>
-                <span><Icon type="folder" /> 视频教程</span>
-                <span><Icon type="fire" /> 5498人</span>
+                <span><StarFilled /> 2019-06-28</span>
+                <span><StarFilled /> 视频教程</span>
+                <span><StarFilled /> 5498人</span>
               </div>
 
               <div className="detailed-content" >

@@ -31,6 +31,19 @@ module.exports = appInfo => {
     agent: false,    // 是否加载到 agent 上，默认关闭
   };
 
+  config.security = {
+    csrf: {
+      enable: false
+    },
+    domainWhiteList: ['*']
+  }
+  config.cors = {
+    // origin: '*',
+    origin: 'http://localhost:3000',
+    credentials: true,
+    allowMethods: 'GET,HEAD,PUT,DELETE,PATCH.OPTIONS'
+  }
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
