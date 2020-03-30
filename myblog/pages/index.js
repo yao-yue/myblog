@@ -9,8 +9,29 @@ import '../static/style/pages/index.css'
 import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
 import Link from 'next/link'
 
+//支持markdown
+import marked from 'marked'
+import hljs from "highlight.js";
+import 'highlight.js/styles/monokai-sublime.css';
+const renderer = new marked.Renderer();
+marked.setOptions({
+  renderer: renderer,
+  gfm: true,
+  pedantic: false,
+  sanitize: false,
+  tables: true,
+  breaks: false,
+  smartLists: true,
+  smartypants: false,
+  sanitize: false,
+  xhtml: false,
+  highlight: function (code) {
+    return hljs.highlightAuto(code).value;
+  }
+});
+
 //api路径
-import  servicePath  from '../config/apiUrl'
+import servicePath from '../config/apiUrl'
 
 const Home = function (list) {
   const [mylist, setMylist] = useState(list.data);
@@ -33,13 +54,15 @@ const Home = function (list) {
                 <List.Item>
                   <div className="list-title">
                     {/* 不能直接在Link里面使用文字导航  要加一个a标签 */}
-                    <Link href={{pathname:'/detailed',query:{id:item.id}}}><a>{item.title}</a></Link></div>
+                    <Link href={{ pathname: '/detailed', query: { id: item.id } }}><a>{item.title}</a></Link></div>
                   <div className="list-icon">
                     <span><StarFilled /> {item.addTime}</span>
                     <span><StarFilled /> {item.typeName}</span>
                     <span><StarFilled /> {item.view_count}人</span>
                   </div>
-                  <div className="list-context">{item.introduce}</div>
+                  <div className="list-context"
+                    dangerouslySetInnerHTML={{ __html: marked(item.introduce) }}>
+                  </div>
                 </List.Item>
               )}
             />
