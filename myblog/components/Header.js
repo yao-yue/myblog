@@ -1,41 +1,63 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import '../static/style/components/header.css'
 import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
-// 测试专用 等下删除
+import Router from 'next/router'
 import Link from 'next/link'
-// 
+import axios from 'axios'
+import  servicePath  from '../config/apiUrl'
 
 import {Row,Col, Menu} from 'antd'
-const Header = () => (
-  <div className="header">
-    <Row type="flex" justify="center">
-        <Col  xs={24} sm={24} md={10} lg={15} xl={12}>
-            <span className="header-logo">ripple_h</span>
-            <span className="header-txt">专注前端开发,每个月赚一百万。</span>
-        </Col>
+const Header = function() {
+    const [navArray , setNavArray] = useState([])
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios(servicePath.getTypeInfo).then(
+                (res) => {
+                    // console.log(res.data.data)
+                    return res.data.data
+                }
+            )
+            setNavArray(result)
+        }
+        fetchData()
+    },[])  
+    
+    //跳转到列表页
+    const handleClick = (e) => {
+        if(e.key==0) {
+            Router.push('/index')
+        }else {
+            Router.push('/list?id='+e.key)
+        }
+    }
 
-        <Col className="memu-div" xs={0} sm={0} md={14} lg={8} xl={6}>
-            <Menu  mode="horizontal">
-                <Menu.Item key="home">
-                    <StarOutlined />
-                    首页
-                </Menu.Item>
-                <Menu.Item key="video">
-                    <StarOutlined />
-                    视频
-                </Menu.Item>
-                <Menu.Item key="life">
-                    <StarOutlined />
-                    生活
-                </Menu.Item>
-                <Menu.Item key="test">
-                    <StarOutlined />
-                    <Link href="/detailed"><a>测试详情页</a></Link>
-                </Menu.Item>
-            </Menu>
-        </Col>
-    </Row>
- </div>
-)
+    return (
+        <div className="header">
+          <Row type="flex" justify="center">
+              <Col  xs={24} sm={24} md={10} lg={15} xl={12}>
+                  <span className="header-logo">ripple_h</span>
+                  <span className="header-txt">专注前端开发,每个月赚一百万。</span>
+              </Col>
+      
+              <Col className="memu-div" xs={0} sm={0} md={14} lg={8} xl={6}>
+                  <Menu  mode="horizontal">
+                      <Menu.Item key="0">
+                          <StarOutlined />
+                          博客首页
+                      </Menu.Item>
+                      {
+                          navArray.map(item => (
+                              <Menu.Item key={item.id}>
+                                  <StarOutlined />
+                                  {item.typeName}
+                              </Menu.Item>
+                          ))
+                      }
+                  </Menu>
+              </Col>
+          </Row>
+       </div>
+      )
+} 
 
 export default Header

@@ -6,5 +6,6 @@ module.exports = app =>{
     router.get('/default/getArticleList',controller.default.home.getArticleList)
     //配置路由动态传值 /:id
     router.get('/default/getArticleById/:id',controller.default.home.getArticleById)
-
+    router.get('/default/getTypeInfo',controller.default.home.getTypeInfo)
+    router.get('/default/getListById/:id',controller.default.home.getListById)
 }
