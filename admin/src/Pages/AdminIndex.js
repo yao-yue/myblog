@@ -19,7 +19,6 @@ function AdminIndex(props) {
   };
 
   const handleClickArticle = e => {
-    console.log(e.item.props)
     if (e.key === 'addArticle') {
       props.history.push('/index/add')
     } else {
@@ -44,9 +43,9 @@ function AdminIndex(props) {
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" >
-          <img src="http://ww1.sinaimg.cn/large/006x4mSygy1gdfn3x3jvcj30et06oglf.jpg" style={{width:'100%',height:'160%'}}/>
+          <img alt="blog-logo" src="http://ww1.sinaimg.cn/large/006x4mSygy1gdfn3x3jvcj30et06oglf.jpg" style={{width:'100%',height:'160%'}}/>
         </div>
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" defaultOpenKeys={['sub1']}>
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline"> 
           <Menu.Item key="1">
             <SmileOutlined />
             <Link to="/index">工作台</Link>
@@ -93,7 +92,7 @@ function AdminIndex(props) {
             </div>
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>JSPang.com</Footer>
+        <Footer style={{ textAlign: 'center' }}>ripple_blog</Footer>
       </Layout>
     </Layout>
   )

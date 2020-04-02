@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../static/css/ArticleList.css'
-import { List, Row, Col, Modal, message, Button} from 'antd';
+import { Modal, message, Button,Table} from 'antd';
 import { getArticleList,delArticleById } from '../api'
 const { confirm } = Modal;
 
@@ -12,9 +12,12 @@ function ArticleList(props) {
     //得到文章列表
     const getList = async() => {
         const res = await getArticleList()
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-        console.log(res)
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        if(res.list) {
+            list.key = list.id
+            setList(res.list)
+        }else {
+            message.error('网络错误')
+        }
     }
     useEffect(() => {
         getList()
@@ -30,12 +33,12 @@ function ArticleList(props) {
                 console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
                 console.log(res)
                 console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-                // axios(servicePath.delArticle + id, { withCredentials: true ,method:'delete'}).then(
-                //     res => {
-                //         message.success('文章删除成功')
-                //         getList()
-                //     }
-                // )
+                if(res.isSuccess) {
+                    message.success('文章删除成功')
+                    getList()
+                }else {
+                    message.error('网络错误')
+                }
             },
             onCancel() {
                 message.success('已撤销删除')
@@ -48,59 +51,44 @@ function ArticleList(props) {
         props.history.push('/index/add/' + id)
     }
 
+
+    const columns = [
+        {
+          title: '标题',
+          dataIndex: 'title',
+          key: 'title',
+        },
+        {
+          title: '类别',
+          dataIndex: 'typeName',
+          key: 'typeName',
+        },
+        {
+          title: '发布时间',
+          dataIndex: 'addTime',
+          key: 'showTime',
+        },
+        {
+          title: '浏览量',
+          dataIndex: 'viewCount',
+          key: 'viewCount',
+
+        },
+        {
+          title: '操作',
+          dataIndex: 'id',
+          key: 'action',
+          render: (id) => (
+            <div>
+                <Button type="primary" onClick={() => {updateArticle(id)}}>修改</Button>&nbsp;
+                <Button onClick={() => {delArticle(id)}}>删除</Button>
+            </div>
+          ),
+        },
+      ];
     return (
         <div>
-            <List
-                header={
-                    <Row className="list-div">
-                        <Col span={8}>
-                            <b>标题</b>
-                        </Col>
-                        <Col span={3}>
-                            <b>类别</b>
-                        </Col>
-                        <Col span={3}>
-                            <b>发布时间</b>
-                        </Col>
-                        <Col span={3}>
-                            <b>集数</b>
-                        </Col>
-                        <Col span={3}>
-                            <b>浏览量</b>
-                        </Col>
-                        <Col span={4}>
-                            <b>操作</b>
-                        </Col>
-                    </Row>
-                }
-                bordered
-                dataSource={list}
-                renderItem={item => (
-                    <List.Item>
-                        <Row className="list-div">
-                            <Col span={8}>
-                                {item.title}
-                            </Col>
-                            <Col span={3}>
-                                {item.typeName}
-                            </Col>
-                            <Col span={3}>
-                                {item.addTime}
-                            </Col>
-                            <Col span={3}>
-                                共<span>{item.part_count}</span>集
-                            </Col>
-                            <Col span={3}>
-                                {item.view_count}
-                            </Col>
-                            <Col span={4}>
-                                <Button type="primary" onClick={updateArticle(item.id)}>修改</Button>&nbsp;
-                                <Button onClick={() => { delArticle(item.id) }} >删除 </Button>
-                            </Col>
-                        </Row>
-                    </List.Item>
-                )}
-            />
+            <Table dataSource={list} columns={columns}/>
         </div>
     )
 }

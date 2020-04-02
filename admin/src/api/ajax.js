@@ -7,15 +7,19 @@ export default function ajax(url, data = {}, method = 'GET') {
     return new Promise((resolve, reject) => {
         let result   //接收请求的结果，是一个promise
         if (method === 'GET') {
-            result = axios.get(url, {
-                params: data
-            })
+            result = axios({
+                method:'get',
+                url,
+                params: data,
+                withCredentials: true, 
+                header: { 'Access-Control-Allow-Origin': '*' }
+              })
         } else if (method === 'POST') {
-            result = axios.post(url, data)
+            result = axios.post(url, data, { withCredentials: true,header: { 'Access-Control-Allow-Origin': '*' },})
         } else if (method === 'DELETE') {
-            result = axios.delete(url, data)
+            result = axios.delete(url, data, { withCredentials: true,header: { 'Access-Control-Allow-Origin': '*' },})
         } else if (method === 'PUT') {
-            result = axios.put(url, data)
+            result = axios.put(url, data, { withCredentials: true,header: { 'Access-Control-Allow-Origin': '*' },})
         }
         //把result拆开看看结果,   类似于await的作用
         result.then(response => {
