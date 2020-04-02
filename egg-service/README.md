@@ -96,3 +96,45 @@ default 客户端使用的所有API接口
 ### 中台路由守卫
 守卫方法是通过egg.js中间件来实现，验证session成功，就会用await next()向下接力，如果验证失败就返回未登录。
 正常情况下前后台是不能共享session的，但是在config.default.js里配置credentials:true ---开启跨域携带cookie
+
+
+### test
+```
+前台
+http://127.0.0.1:7001/default/index
+http://127.0.0.1:7001/default/getArticleList
+http://127.0.0.1:7001/default/getArticleById/:id
+http://127.0.0.1:7001/default/getTypeInfo
+http://127.0.0.1:7001/default/getListById/:id
+```
+
+
+```
+后台
+http://127.0.0.1:7001/admin/index
+http://127.0.0.1:7001/admin/checkLogin
+http://127.0.0.1:7001/admin/getTypeInfo
+http://127.0.0.1:7001/admin/addArticle
+http://127.0.0.1:7001/admin/getArticleList
+http://127.0.0.1:7001/admin/updateArticle/:id
+http://127.0.0.1:7001/admin/delArticle/:id
+http://127.0.0.1:7001/admin/getArticleById/:id
+```
+
+```
+备注： 
+sessionId:1585571410782
+time: 1585572487
+```
+
+```
+//计划优化
+1. 重写url
+2. 请求函数的报错和返回内容的优化
+
+//笔记查询语句
+insert into musics (title,singer,time,filelrc,file,uid) values (?,?,?,?,?,?)
+update musics set title=?,singer=?,time=?,filelrc=?,file=?,uid=? where id=?
+delte from musics where id = ?', [id]
+query * from music where id = ?', [id]
+```
