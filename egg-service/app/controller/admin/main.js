@@ -10,22 +10,30 @@ class MainController extends Controller {
     async checkLogin() {
         let { username, password } = this.ctx.request.body
 
-        const sql = " SELECT username FROM admin_user WHERE username = '" + username +
+        const sql = " SELECT id FROM admin_user WHERE username = '" + username +
             "' AND password = '" + password + "'"
         const res = await this.app.mysql.query(sql)
+        // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        // console.log(res)
+        // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        const userId = res[0].id ? res[0].id : -1
         if (res.length > 0) {
             //登录成功,进行session缓存
             let openId = new Date().getTime()
             this.ctx.session.openId = { 'openId': openId }
-            this.ctx.body = { status: '001', msg: 'success', openId }
+            this.ctx.body = { status: '1', msg: 'success', openId, userId }
         } else {
-            this.ctx.body = { data: '登录失败' }
+            this.ctx.body = { status: '0', msg: 'logining fail' }
         }
     }
     //后台文章分类信息
     async getTypeInfo() {
         const resType = await this.app.mysql.select('type')
-        this.ctx.body = { data: resType }
+        if(!resType) {
+            this.ctx.body = { status:'0', data: [] }
+        } else {
+            this.ctx.body = { status:'1', data: resType }
+        }
     }
 
     //添加文章
@@ -33,7 +41,7 @@ class MainController extends Controller {
         let tmpArticle = this.ctx.request.body
         const result = await this.app.mysql.query('insert into article (type_id,title,article_content,introduce,addTime,view_count) values (?,?,?,?,?,?)', Object.values(tmpArticle))
         const insertSuccess = !!(result.affectedRows === 1)
-        const insertId = result.insertId
+        const insertId = result.insertId ? result.insertId : -1
         this.ctx.body = {
             isSuccess: insertSuccess,
             insertId
@@ -63,7 +71,11 @@ class MainController extends Controller {
             'FROM article LEFT JOIN type ON article.type_id = type.Id ' +
             'ORDER BY article.id DESC '
         const resList = await this.app.mysql.query(sql)
-        this.ctx.body = { list: resList }
+        if(!resList) {
+            this.ctx.body = {status:'0', list: [] }
+        } else {
+            this.ctx.body = {status:'1', list: resList }
+        }
     }
 
     //删除文章
@@ -89,7 +101,11 @@ class MainController extends Controller {
             'FROM article LEFT JOIN type ON article.type_id = type.Id ' +
             'WHERE article.id=' + id
         const result = await this.app.mysql.query(sql)
-        this.ctx.body = { data: result }
+        if(!result) {
+        this.ctx.body = { status:'0',data: {} }
+        } else {
+            this.ctx.body = { status: '1', data: result }
+        }
     }
 }
 

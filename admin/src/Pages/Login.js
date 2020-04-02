@@ -5,13 +5,12 @@ import { Card, Input, Button, Spin ,message } from 'antd';
 import {
     SmileOutlined,
 } from '@ant-design/icons';
+import {  Redirect} from 'react-router-dom'
 
-import axios from 'axios'
-import servicePath from '../config/apiUrl'
-// const openIdContext = createContext()
+import {reqLogin} from '../api'
 
 function Login(props) {
-    const [userName, setUserName] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     //isLoading用户控制Spin组件是否进入加载状态，进入加载状态可以有效防止重复提交
     const [isLoading, setIsLoading] = useState(false)
@@ -20,45 +19,39 @@ function Login(props) {
 
     },[])
 
-    const checkLogin = () => {
+    const checkLogin = async () => {
         setIsLoading(true)
 
-        if (!userName) {
+        if (!username) {
             message.error('用户名不能为空')
             return false
         } else if (!password) {
             message.error('密码不能为空')
             return false
         }
-        let dataProps = {
-            'username': userName,
-            'password': password
+        const res = await reqLogin(username, password)
+        if(res.status === '1') {
+            setIsLoading(false)
+            localStorage.setItem('openId', res.openId)
+            props.history.push('/index')
+        } else {
+            message.error('用户名或密码错误')
         }
-        axios({
-            method: 'post',
-            url: servicePath.checkLogin,
-            data: dataProps,
-            withCredentials: true
-        }).then(
-            res => {
-                setIsLoading(false)
-                if (res.data.msg === 'success') {
-                    localStorage.setItem('openId', res.data.openId)
-                    props.history.push('/index')
-                } else {
-                    message.error('用户名密码错误')
-                }
-            }
-        )
 
         setTimeout(() => {
             setIsLoading(false)
         }, 1000)
     }
 
+
+
+    // 如果用户已经登陆, 自动跳转到管理界面
+    const openId = localStorage.getItem('openId')
+    if(openId) {
+      return <Redirect to='/index'/>
+    }
     return (
         <div className="login-div">
-
             <Spin tip="Loading..." spinning={isLoading}>
                 <Card title="JSPang Blog  System" bordered={true} style={{ width: 400 }} >
                     <Input
@@ -66,7 +59,7 @@ function Login(props) {
                         size="large"
                         placeholder="Enter your userName"
                         prefix={<SmileOutlined/>}
-                        onChange={(e) => { setUserName(e.target.value) }}
+                        onChange={(e) => { setUsername(e.target.value) }}
                     />
                     <br /><br />
                     <Input.Password

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../static/css/ArticleList.css'
 import { List, Row, Col, Modal, message, Button} from 'antd';
-import axios from 'axios'
-import servicePath from '../config/apiUrl'
+import { getArticleList,delArticleById } from '../api'
 const { confirm } = Modal;
 
 
@@ -11,17 +10,11 @@ function ArticleList(props) {
     const [list, setList] = useState([])
 
     //得到文章列表
-    const getList = () => {
-        axios({
-            method: 'get',
-            url: servicePath.getArticleList,
-            withCredentials: true,
-            header: { 'Access-Control-Allow-Origin': '*' }
-        }).then(
-            res => {
-                setList(res.data.list)
-            }
-        )
+    const getList = async() => {
+        const res = await getArticleList()
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        console.log(res)
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
     }
     useEffect(() => {
         getList()
@@ -32,16 +25,20 @@ function ArticleList(props) {
         confirm({
             title: '确定要删除这篇博客文章吗?',
             content: '如果你点击OK按钮，文章将会永远被删除，无法恢复。',
-            onOk() {
-                axios(servicePath.delArticle + id, { withCredentials: true ,method:'delete'}).then(
-                    res => {
-                        message.success('文章删除成功')
-                        getList()
-                    }
-                )
+            async onOk() {
+                const res = await delArticleById(id)
+                console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+                console.log(res)
+                console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+                // axios(servicePath.delArticle + id, { withCredentials: true ,method:'delete'}).then(
+                //     res => {
+                //         message.success('文章删除成功')
+                //         getList()
+                //     }
+                // )
             },
             onCancel() {
-                message.success('没有任何改变')
+                message.success('已撤销删除')
             },
         });
     }

@@ -1,10 +1,8 @@
 import React, { useState,useEffect } from 'react';
 import marked from 'marked'
-import axios from 'axios'
-import servicePath from '../config/apiUrl'
 import '../static/css/AddArticle.css'
 import { Row, Col, Input, Select, Button, DatePicker,message } from 'antd'
-
+import { getTypeInfo, getArticleById,updateArticle,addArticle} from '../api'
 
 const { Option } = Select;
 const { TextArea } = Input
@@ -49,50 +47,57 @@ function AddArticle(props) {
     }
 
     //从中台得到文章类别信息
-    const getTypeInfo = () => {
-        axios({
-            method: 'get',
-            url: servicePath.getTypeInfo,
-            header: { 'Access-Control-Allow-Origin': '*' },
-            withCredentials: true
-        }).then(
-            res => {
-                if (res.data.status === "401") {
-                    localStorage.removeItem('openId')
-                    props.history.push('/')
-                } else {
-                    setTypeInfo(res.data.data)
-                }
-
-            }
-        )
+    const _getTypeInfo = async() => {
+        const res = await getTypeInfo()
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        console.log(res)
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        // axios({
+        //     method: 'get',
+        //     url: servicePath.getTypeInfo,
+        //     header: { 'Access-Control-Allow-Origin': '*' },
+        //     withCredentials: true
+        // }).then(
+        //     res => {
+        //         if (res.data.status === "401") {
+        //             localStorage.removeItem('openId')
+        //             props.history.push('/')
+        //         } else {
+        //             setTypeInfo(res.data.data)
+        //         }
+        //     }
+        // )
     }
     //选择类别后的的操作
     const selectTypeHandler = (value) => {
         setSelectType(value)
     }
 
-    const getArticleById = (id)=>{
-        axios(servicePath.getArticleById+id,{ 
-            withCredentials: true,
-            header:{ 'Access-Control-Allow-Origin':'*' }
-        }).then(
-            res=>{
-                //let articleInfo= res.data.data[0]
-                setArticleTitle(res.data.data[0].title)
-                setArticleContent(res.data.data[0].article_content)
-                let html=marked(res.data.data[0].article_content)
-                setMarkdownContent(html)
-                setIntroducemd(res.data.data[0].introduce)
-                let tmpInt = marked(res.data.data[0].introduce)
-                setIntroducehtml(tmpInt)
-                setShowDate(res.data.data[0].addTime)
-                setSelectType(res.data.data[0].typeId)
-            }
-        )
+    const _getArticleById = async(id)=>{
+        const res = await getArticleById(id)
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        console.log(res)
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        // axios(servicePath.getArticleById+id,{ 
+        //     withCredentials: true,
+        //     header:{ 'Access-Control-Allow-Origin':'*' }
+        // }).then(
+        //     res=>{
+        //         //let articleInfo= res.data.data[0]
+        //         setArticleTitle(res.data.data[0].title)
+        //         setArticleContent(res.data.data[0].article_content)
+        //         let html=marked(res.data.data[0].article_content)
+        //         setMarkdownContent(html)
+        //         setIntroducemd(res.data.data[0].introduce)
+        //         let tmpInt = marked(res.data.data[0].introduce)
+        //         setIntroducehtml(tmpInt)
+        //         setShowDate(res.data.data[0].addTime)
+        //         setSelectType(res.data.data[0].typeId)
+        //     }
+        // )
     }
 
-    const saveArticle = () => {
+    const saveArticle = async() => {
         markdownContent()  //先进行格式转换
 
         if (!selectedType) {
@@ -121,55 +126,58 @@ function AddArticle(props) {
         dataProps.addTime = (new Date(datetext).getTime()) / 1000
 
         //调用api
+        let response;
         if (articleId === 0) {
             console.log('articleId=:' + articleId)
             dataProps.view_count = Math.ceil(Math.random() * 100) + 1000
-            axios({
-                method: 'post',
-                url: servicePath.addArticle,
-                data: dataProps,
-                withCredentials: true
-            }).then(
-                res => {
-                    setArticleId(res.data.insertId)
-                    if (res.data.isScuccess) {
-                        message.success('文章保存成功')
-                    } else {
-                        message.error('文章保存失败');
-                    }
+            response = await addArticle(dataProps)
+            // axios({
+            //     method: 'post',
+            //     url: servicePath.addArticle,
+            //     data: dataProps,
+            //     withCredentials: true
+            // }).then(
+            //     res => {
+            //         setArticleId(res.data.insertId)
+            //         if (res.data.isScuccess) {
+            //             message.success('文章保存成功')
+            //         } else {
+            //             message.error('文章保存失败');
+            //         }
 
-                }
-            )
+            //     }
+            // )
         } else {  //否之 修改
             dataProps.id = articleId
-            axios({
-                method: 'post',
-                url: servicePath.updateArticle,
-                header: { 'Access-Control-Allow-Origin': '*' },
-                data: dataProps,
-                withCredentials: true
-            }).then(
-                res => {
+            response = await updateArticle(dataProps)
+            // axios({
+            //     method: 'post',
+            //     url: servicePath.updateArticle,
+            //     header: { 'Access-Control-Allow-Origin': '*' },
+            //     data: dataProps,
+            //     withCredentials: true
+            // }).then(
+            //     res => {
 
-                    if (res.data.isScuccess) {
-                        message.success('文章保存成功')
-                    } else {
-                        message.error('保存失败');
-                    }
-                }
-            )
+            //         if (res.data.isScuccess) {
+            //             message.success('文章保存成功')
+            //         } else {
+            //             message.error('保存失败');
+            //         }
+            //     }
+            // )
 
         }
 
     }
 
     useEffect(()=>{
-        getTypeInfo()
+        _getTypeInfo()
         //获得文章ID
         let tmpId = props.match.params.id
         if(tmpId){
             setArticleId(tmpId)
-            getArticleById(tmpId)
+            _getArticleById(tmpId)
         } 
     },[])
 
