@@ -6,8 +6,8 @@ const icpStyle = {
 }
 
 const Footer = ()=>(
-    <div className="footer-div">
-        <div>系统由 React+Node+Ant Desgin驱动 </div>
+    <div className="footer-div" >
+        <div>系统由 React+Node+egg+Ant Desgin驱动 </div>
         <div>Rect.red</div>
         <div className="ICP-info" style={icpStyle}>
             <img src="../static/img/police-logo.png" alt="police-logo" style={{width:"20px",height:"20px",marginRight:"10px"}}/>

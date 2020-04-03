@@ -143,3 +143,6 @@ query * from music where id = ?', [id]
 ### jwt
 [jwt](https://blog.csdn.net/isHoMeTown/article/details/101272591)
 路由守卫自己写还是弄一个jwt呢，弄一下再说把。
+
+
+### 去他妈的egg 天坑，在服务器npm start一直报错
