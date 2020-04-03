@@ -11,7 +11,7 @@ export const getTypeInfo = () => ajax(BASE+ '/getTypeInfo')
 // 添加文章
 export const addArticle = (data) => ajax(BASE + '/addArticle', data, 'POST')
 // 根据文章id修改文章
-export const updateArticle = id => ajax(BASE + '/updateArticle/' + id, {}, 'PUT')
+export const updateArticle = (id,data) => ajax(BASE + '/updateArticle/' + id, data, 'PUT')
 // 获取文章列表
 export const getArticleList = () => ajax(BASE + '/getArticleList')
 // 删除文章

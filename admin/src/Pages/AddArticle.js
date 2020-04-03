@@ -20,6 +20,8 @@ function AddArticle(props) {
     const [typeInfo, setTypeInfo] = useState([]) // 文章类别信息
     const [selectedType, setSelectType] = useState("选择文章类别") //选择的文章类别
 
+    const [viewMD, setViewMD] = useState(true)
+
     //marked options
     const renderer = new marked.Renderer()
     marked.setOptions({
@@ -58,10 +60,7 @@ function AddArticle(props) {
     }
 
     const initData = (data) => {
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-        console.log("这里错了？",data)
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-        let {title, addTime, typeId, article_content ,introduce } = data
+        let { title = "", addTime = showDate, typeId = selectedType, article_content = "", introduce = "" } = data
         setArticleTitle(title)
         setShowDate(addTime)
         setSelectType(typeId)
@@ -81,26 +80,23 @@ function AddArticle(props) {
         }
     }
     const tempSaveArticle = () => {
-        console.log('立即调用？')
         let dataProps = {}  //传递到接口的参数
         dataProps.type_id = selectedType
         dataProps.title = articleTitle
         dataProps.article_content = articleContent
         dataProps.introduce = introducemd
-        if(showDate) {
+        if (showDate) {
             let datetext = showDate.replace('-', '/') //把字符串转换成时间戳
             dataProps.addTime = (new Date(datetext).getTime()) / 1000
         }
-        //存进localStorage
-        // let dataPropsJsoned = JSON.stringify(dataProps)
-        // localStorage.setItem('savedArticle',dataPropsJsoned)
-        // message.success('暂存成功')
+        // 存进localStorage
+        let dataPropsJsoned = JSON.stringify(dataProps)
+        localStorage.setItem('savedArticle', dataPropsJsoned)
+        message.success('暂存成功')
     }
 
     const saveArticle = async () => {
-        // markdownContent()  //先进行格式转换
-
-        if (!selectedType) {
+        if (!selectedType || selectedType === "选择文章类别") {
             message.error('必须选择文章类别')
             return false
         } else if (!articleTitle) {
@@ -113,9 +109,10 @@ function AddArticle(props) {
             message.error('简介不能为空')
             return false
         } else if (!showDate) {
-            message.success('发布日期已设为当前时间')
-            showDate = setShowDate(Date.now())
-            // return false
+            // message.success('发布日期已设为当前时间')
+            // setShowDate(Date.now())
+            message.error('发布时间不能为空')
+            return false
         }
 
         let dataProps = {}  //传递到接口的参数
@@ -123,29 +120,35 @@ function AddArticle(props) {
         dataProps.title = articleTitle
         dataProps.article_content = articleContent
         dataProps.introduce = introducemd
-        let datetext = showDate.replace('-', '/') //把字符串转换成时间戳
-        dataProps.addTime = (new Date(datetext).getTime()) / 1000
+        //正常处理
+        if (showDate.toString().indexOf('-') >= 0) {
+            let datetext = showDate.replace('-', '/') //把字符串转换成时间戳
+            dataProps.addTime = (new Date(datetext).getTime()) / 1000
+        } else {
+            dataProps.addTime = showDate
+        }
 
         console.log(dataProps)
         //调用api
         let res;
         if (articleId === 0) {
-            console.log('articleId=:' + articleId)
-            dataProps.view_count = Math.ceil(Math.random() * 100) + 1000
             res = await addArticle(dataProps)
             if (res) {
-                setArticleId(res.data.insertId)
-                if (res.data.isScuccess) {
+                setArticleId(res.insertId)
+                if (res.isSuccess) {
                     message.success('文章添加成功')
+                    //清除缓存
+                    localStorage.removeItem('savedArticle')
+                    initData({})
+                    setArticleId(0)       //防止原地调用变成修改
                 } else {
                     message.error('文章添加失败');
                 }
             }
         } else {  //否之 修改
-            dataProps.id = articleId
-            res = await updateArticle(dataProps)
+            res = await updateArticle(articleId, dataProps)
             if (res) {
-                if (res.data.isScuccess) {
+                if (res.isScuccess) {
                     message.success('文章修改成功')
                 } else {
                     message.error('文章修改失败');
@@ -155,29 +158,38 @@ function AddArticle(props) {
 
     }
 
-    useEffect(() => {
-        _getTypeInfo()
+    function _initPage() {
         //获得文章ID
         let tmpId = props.match.params.id
         let savedArticle = localStorage.getItem('savedArticle')
         if (tmpId) {
             setArticleId(tmpId)
             _getArticleById(tmpId)
-        } else if(savedArticle) {
-            const data = JSON.parse(saveArticle)
+        } else if (savedArticle) {
+            const data = JSON.parse(savedArticle)
             console.log(data)
-            // initData(data)
+            initData(data)
         }
+    }
+
+    useEffect(() => {
+        _getTypeInfo()
+        _initPage()
     }, [])
 
+    //数据立即更新
+    useEffect(() => {
+        setSelectType(selectedType)
+        setShowDate(showDate)
+    }, [selectedType, showDate])
 
     return (
         <div>
             <div>
                 <Row gutter={5}>
                     <Col span={18}>
-                        <Row gutter={10} >
-                            <Col span={16}>
+                        <Row gutter={10} style={{ display: "flex", flexWrap: 'nowrap' }}>
+                            <Col span={14}>
                                 <Input
                                     value={articleTitle}
                                     placeholder="博客标题"
@@ -186,18 +198,21 @@ function AddArticle(props) {
                                     }}
                                     size="large" />
                             </Col>
-                            <Col span={6}>
+                            <Col span={5}>
                                 {/* &nbsp; */}
                                 <Select defaultValue={selectedType} size="large" onChange={selectTypeHandler}>
                                     {typeInfo.map((item, index) => {
-                                        return (<Option key={index} value={item.Id}>{item.typeName}</Option>)
+                                        return (<Option key={index} value={item.id}>{item.typeName}</Option>)
                                     })}
                                 </Select>
                             </Col>
+                            <Col span={2}>
+                                <Button style={{ marginLeft: '6px', marginTop: '4px' }} type="primary" onClick={() => { setViewMD(!viewMD) }}>viewMD</Button>
+                            </Col>
                         </Row>
                         <br />
-                        <Row gutter={10} >
-                            <Col span={12}>
+                        <Row gutter={8} >
+                            <Col span={viewMD ? 12 : 24}>
                                 <TextArea
                                     value={articleContent}
                                     className="markdown-content"
@@ -208,7 +223,7 @@ function AddArticle(props) {
                                 />
 
                             </Col>
-                            <Col span={12}>
+                            <Col span={viewMD ? 12 : 0}>
                                 <div className="show-html"
                                     dangerouslySetInnerHTML={{ __html: markdownContent }} >
                                 </div>

@@ -36,6 +36,7 @@ class MainController extends Controller {
     //添加文章
     async addArticle() {
         let tmpArticle = this.ctx.request.body
+        tmpArticle.view_count = 1
         const result = await this.app.mysql.query('insert into article (type_id,title,article_content,introduce,addTime,view_count) values (?,?,?,?,?,?)', Object.values(tmpArticle))
         const insertSuccess = !!(result.affectedRows === 1)
         const insertId = result.insertId ? result.insertId : -1
@@ -50,7 +51,10 @@ class MainController extends Controller {
         const tmpArticle = this.ctx.request.body
         const id = this.ctx.params.id
         tmpArticle.id = id
-        let updateSQL = `update article set type_id=?,title=?,article_content=?,introduce=?,addTime=?,view_count=? where id=?`
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        console.log(Object.values(tmpArticle))
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        let updateSQL = `update article set type_id=?,title=?,article_content=?,introduce=?,addTime=? where id=?`
         const result = await this.app.mysql.query(updateSQL, Object.values(tmpArticle));
         const updateSuccess = !!(result.affectedRows === 1)
         this.ctx.body = {
@@ -81,7 +85,7 @@ class MainController extends Controller {
         let id = this.ctx.params.id
         const res = await this.app.mysql.delete('article', { 'id': id })
         const delSuccess = !!(res.affectedRows === 1)
-        const msg = res.changedRows === 0? 'no this article': 'success'
+        const msg = delSuccess ? 'success': 'no this article'
         this.ctx.body = { delSuccess,msg }
     }
 

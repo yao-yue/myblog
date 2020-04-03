@@ -13,7 +13,9 @@ function ArticleList(props) {
     const getList = async() => {
         const res = await getArticleList()
         if(res.list) {
-            list.key = list.id
+            for(let item of res.list) {
+                item.key = item.id
+            }
             setList(res.list)
         }else {
             message.error('网络错误')
@@ -30,10 +32,7 @@ function ArticleList(props) {
             content: '如果你点击OK按钮，文章将会永远被删除，无法恢复。',
             async onOk() {
                 const res = await delArticleById(id)
-                console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-                console.log(res)
-                console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-                if(res.isSuccess) {
+                if(res.delSuccess) {
                     message.success('文章删除成功')
                     getList()
                 }else {
