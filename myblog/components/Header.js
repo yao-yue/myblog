@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import '../static/style/components/header.css'
 import { HomeOutlined,BookOutlined } from '@ant-design/icons';
-import Router from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
 import  servicePath  from '../config/apiUrl'
@@ -22,14 +21,14 @@ const Header = function() {
         fetchData()
     },[])  
     
-    //跳转到列表页
-    const handleClick = (e) => {
-        if(e.key==0) {
-            Router.push('/index')
-        }else {
-            Router.push('/list?id='+e.key)
-        }
-    }
+    // //跳转到列表页
+    // const handleClick = (e) => {
+    //     if(e.key==0) {
+    //         Router.push('/index')
+    //     }else {
+    //         Router.push('/list?id='+e.key)
+    //     }
+    // }
 
     return (
         <div className="header">
@@ -43,13 +42,13 @@ const Header = function() {
                   <Menu  mode="horizontal">
                       <Menu.Item key="0">
                         <HomeOutlined />
-                          博客首页
+                        <Link href={{ pathname: '/'}}><a>博客首页</a></Link>
                       </Menu.Item>
                       {
                           navArray.map(item => (
                               <Menu.Item key={item.id}>
                                   <BookOutlined />
-                                  {item.typeName}
+                                  <Link href={{ pathname: '/list', query: { id: item.id } }}><a>{item.typeName}</a></Link>
                               </Menu.Item>
                           ))
                       }

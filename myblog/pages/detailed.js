@@ -8,27 +8,28 @@ import Head from 'next/head'
 import { Row, Col, Affix, Breadcrumb } from 'antd'
 import { FieldTimeOutlined, EyeOutlined, BookOutlined } from '@ant-design/icons';
 
-//处理markdown
-// import ReactMarkdown from 'react-markdown'; //wasted
-import marked from 'marked'
-import hljs from 'highlight.js'
-import 'highlight.js/styles/monokai-sublime.css'
-
-//生成文章目录
-// import MarkNav from 'markdown-navbar'; //wasted
-import Tocify from '../components/tocify.tsx'
-
 import axios from 'axios'
+//api
+import  servicePath  from '../config/apiUrl'
 
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
+
+
+//处理markdown
+// import ReactMarkdown from 'react-markdown'; //wasted
+import marked from 'marked'
+import hljs from 'highlight.js'
+//生成文章目录
+// import MarkNav from 'markdown-navbar'; //wasted
+import Tocify from '../components/tocify.tsx'
+import 'highlight.js/styles/monokai-sublime.css'
 import '../static/style/pages/detailed.css'
 import 'markdown-navbar/dist/navbar.css';
 
-//api
-import  servicePath  from '../config/apiUrl'
+
 
 
 const Detailed = function (props) {

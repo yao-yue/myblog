@@ -5,7 +5,6 @@ import { Row, Col, List } from 'antd'
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
-import '../static/style/pages/index.css'
 import { FieldTimeOutlined, EyeOutlined, BookOutlined } from '@ant-design/icons';
 import Link from 'next/link'
 
@@ -13,6 +12,8 @@ import Link from 'next/link'
 import marked from 'marked'
 import hljs from "highlight.js";
 import 'highlight.js/styles/monokai-sublime.css';
+
+import '../static/style/pages/index.css'
 const renderer = new marked.Renderer();
 marked.setOptions({
   renderer: renderer,

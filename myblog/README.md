@@ -17,3 +17,8 @@
 自己写后台这些接口才明白为什么前端要路由封装
 1. 用promise包装,统一报错检验.
 2. 方便统一修改,比如开发环境切换到线上环境的ip修改.
+
+
+### jwt
+[jwt](https://blog.csdn.net/isHoMeTown/article/details/101272591)
+路由守卫自己写还是弄一个jwt呢，弄一下再说把。

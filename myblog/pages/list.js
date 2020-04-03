@@ -3,33 +3,37 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { Row, Col, List, Breadcrumb } from 'antd'
-import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
+import { FieldTimeOutlined, EyeOutlined, BookOutlined } from '@ant-design/icons';
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
-import '../static/style/pages/comm.css'
-
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
 import Link from 'next/link'
 
+import '../static/style/pages/comm.css'
+
 
 
 const ArticleList = (props) => {
+  const typeId = props.tyepId
   const initList = props.data
-  console.log('xxxxxxxxxxxxxx')
-  console.log(props.data)
-  console.log('xxxxxxxxxxxxxx')
   const [mylist, setMylist] = useState(initList);
-  //解决刷新问题 之后再修正
+  
   useEffect(() => {
-    setMylist(mylist)
-  })
+    pullList(typeId)
+  },[typeId])
+
+  const pullList = async(id) => {
+    const result = await axios(servicePath.getListById + id)
+    setMylist(result.data.data)
+  }
+
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>List</title>
       </Head>
       <Header />
       <Row className="comm-main" type="flex" justify="center">
@@ -51,9 +55,9 @@ const ArticleList = (props) => {
                     <a>{item.title}</a>
                   </Link>
                   <div className="list-icon">
-                    <span><StarFilled />{item.addTime}</span>
-                    <span><StarFilled /> {item.typeName}</span>
-                    <span><StarFilled /> {item.view_count}人</span>
+                    <span><FieldTimeOutlined />{item.addTime}</span>
+                    <span><BookOutlined /> {item.typeName}</span>
+                    <span><EyeOutlined /> {item.view_count} 次</span>
                   </div>
                   <div className="list-context">{item.introduce}</div>
                 </List.Item>
@@ -82,7 +86,9 @@ ArticleList.getInitialProps = async (context) => {
       (res) => resolve(res.data)
     )
   })
-  return await promise
+  let pack = await promise
+  pack.tyepId = id
+  return pack
 }
 
 export default ArticleList
