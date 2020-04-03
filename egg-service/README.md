@@ -138,3 +138,8 @@ update musics set title=?,singer=?,time=?,filelrc=?,file=?,uid=? where id=?
 delte from musics where id = ?', [id]
 query * from music where id = ?', [id]
 ```
+
+
+### jwt
+[jwt](https://blog.csdn.net/isHoMeTown/article/details/101272591)
+路由守卫自己写还是弄一个jwt呢，弄一下再说把。

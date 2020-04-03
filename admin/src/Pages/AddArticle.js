@@ -150,6 +150,8 @@ function AddArticle(props) {
             if (res) {
                 if (res.isScuccess) {
                     message.success('文章修改成功')
+                    initData({})
+                    setArticleId(0)       //防止原地调用变成修改
                 } else {
                     message.error('文章修改失败');
                 }

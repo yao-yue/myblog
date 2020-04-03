@@ -41,7 +41,7 @@ module.exports = appInfo => {
     // origin: '*',
     origin: 'http://localhost:3000',
     credentials: true,   //允许跨域携带cookie
-    allowMethods: 'GET,HEAD,PUT,DELETE,PATCH.OPTIONS'
+    allowMethods: 'GET,PUT,DELETE,POST,OPTIONS'
   }
 
   // add your user config here
