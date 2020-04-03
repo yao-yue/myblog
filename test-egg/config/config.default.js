@@ -1,4 +1,3 @@
-
 /* eslint valid-jsdoc: "off" */
 
 'use strict';
@@ -19,34 +18,9 @@ module.exports = appInfo => {
   // add your middleware config here
   config.middleware = [];
 
-  //mysql配置
-  config.mysql = {
-    client: {
-      host: 'localhost',
-      port: '3306',
-      user: 'redqueen',
-      password: '112233',
-      database: 'react_blog',
-    },
-    app: true,        // 是否加载到 app 上，默认开启
-    agent: false,    // 是否加载到 agent 上，默认关闭
-  };
-
-  config.security = {
-    csrf: {
-      enable: false
-    },
-    domainWhiteList: ['*']
-  }
-  config.cors = {
-    // origin: '*',
-    origin: 'http://localhost:3000',
-    credentials: true,   //允许跨域携带cookie
-    allowMethods: 'GET,PUT,DELETE,POST,OPTIONS'
-  }
   config.cluster = {
     lsiten: {
-      port: 8090,
+      port: 8099,
       hostname: '127.0.0.1',
     }
   }
@@ -60,5 +34,3 @@ module.exports = appInfo => {
     ...userConfig,
   };
 };
-
-
