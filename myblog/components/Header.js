@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import '../static/style/components/header.css'
-import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
+import { HomeOutlined,BookOutlined } from '@ant-design/icons';
 import Router from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
@@ -42,13 +42,13 @@ const Header = function() {
               <Col className="memu-div" xs={0} sm={0} md={14} lg={8} xl={6}>
                   <Menu  mode="horizontal">
                       <Menu.Item key="0">
-                          <StarOutlined />
+                        <HomeOutlined />
                           博客首页
                       </Menu.Item>
                       {
                           navArray.map(item => (
                               <Menu.Item key={item.id}>
-                                  <StarOutlined />
+                                  <BookOutlined />
                                   {item.typeName}
                               </Menu.Item>
                           ))

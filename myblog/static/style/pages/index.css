@@ -56,3 +56,10 @@ code {
    margin:8px  auto ;
 
 }
+
+.ICP-info {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    /* background-color: red; */
+}

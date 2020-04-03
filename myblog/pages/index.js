@@ -6,7 +6,7 @@ import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import '../static/style/pages/index.css'
-import { StarOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
+import { FieldTimeOutlined, EyeOutlined, BookOutlined } from '@ant-design/icons';
 import Link from 'next/link'
 
 //支持markdown
@@ -56,9 +56,9 @@ const Home = function (list) {
                     {/* 不能直接在Link里面使用文字导航  要加一个a标签 */}
                     <Link href={{ pathname: '/detailed', query: { id: item.id } }}><a>{item.title}</a></Link></div>
                   <div className="list-icon">
-                    <span><StarFilled /> {item.addTime}</span>
-                    <span><StarFilled /> {item.typeName}</span>
-                    <span><StarFilled /> {item.view_count}人</span>
+                    <span><FieldTimeOutlined /> {item.addTime}</span>
+                    <span><BookOutlined /> {item.typeName}</span>
+                    <span><EyeOutlined /> {item.view_count}  次</span>
                   </div>
                   <div className="list-context"
                     dangerouslySetInnerHTML={{ __html: marked(item.introduce) }}>
@@ -72,6 +72,10 @@ const Home = function (list) {
         <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
           <Author />
           <Advert />
+          <div className="ICP-info">
+            <img src="../static/img/police-logo.png" alt="police-logo" style={{width:"20px",height:"20px",marginRight:"10px"}}/>
+            <a href="http://www.beian.miit.gov.cn/">赣ICP备20003337号</a>
+          </div>
         </Col>
       </Row>
 
@@ -84,7 +88,6 @@ Home.getInitialProps = async () => {
   const promise = new Promise((resolve) => {
     axios(servicePath.getArticleList).then(
       (res) => {
-        //console.log('远程获取数据结果:',res.data.data)
         resolve(res.data)
       }
     )
