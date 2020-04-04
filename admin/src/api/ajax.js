@@ -20,7 +20,7 @@ export default function ajax(url, data = {}, method = 'GET') {
         } else if (method === 'DELETE') {
             result = axios.delete(url, data)
         } else if (method === 'PUT') {
-            result = axios.put(url, data, { withCredentials: true,header: { 'Access-Control-Allow-Origin': '*' },})
+            result = axios.put(url, data)
         }
         //把result拆开看看结果,   类似于await的作用
         result.then(response => {

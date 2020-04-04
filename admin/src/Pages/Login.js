@@ -53,7 +53,7 @@ function Login(props) {
     return (
         <div className="login-div">
             <Spin tip="Loading..." spinning={isLoading}>
-                <Card title="JSPang Blog  System" bordered={true} style={{ width: 400 }} >
+                <Card title="Ripple Blog  System" bordered={true} style={{ width: 400 }} >
                     <Input
                         id="userName"
                         size="large"
