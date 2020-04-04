@@ -19,3 +19,30 @@
 2. 方便统一修改,比如开发环境切换到线上环境的ip修改.
 
 
+### 部署笔记
+package.json  这样配置方便一些，把2个合并成了一个
+```
+{
+  "name": "my-app",
+  "dependencies": {
+    "next": "latest"
+  },
+  "scripts": {
+    "dev": "next",
+    "start": "next start -p $PORT",
+    "build": "next build && PORT=3001 npm start"  
+  }
+}
+```
+PM2其实不复杂。pm2是nodejs的一个带有负载均衡功能的应用进程管理器的模块，类似有Supervisor，forever，用来进行进程管理。
+- 进入对应的应用目录
+- pm2 start npm --name "my-next" -- run build
+常用操作：
+pm2 start 
+pm2 list 
+pm2 monit
+pm2 stop []
+pm2 reload []
+pm2 restart []
+pm2 delete []
+pm2 --help
