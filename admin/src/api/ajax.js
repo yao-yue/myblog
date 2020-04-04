@@ -1,5 +1,8 @@
 import { message } from 'antd'
 import axios from 'axios'
+axios.defaults.withCredentials=true
+axios.defaults.crossDomain=true
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 //封装axios，集中错误处理
 
@@ -11,13 +14,11 @@ export default function ajax(url, data = {}, method = 'GET') {
                 method:'get',
                 url,
                 params: data,
-                withCredentials: true, 
-                header: { 'Access-Control-Allow-Origin': '*' }
               })
         } else if (method === 'POST') {
-            result = axios.post(url, data, { withCredentials: true,header: { 'Access-Control-Allow-Origin': '*' },})
+            result = axios.post(url, data)
         } else if (method === 'DELETE') {
-            result = axios.delete(url, data, { withCredentials: true,header: { 'Access-Control-Allow-Origin': '*' },})
+            result = axios.delete(url, data)
         } else if (method === 'PUT') {
             result = axios.put(url, data, { withCredentials: true,header: { 'Access-Control-Allow-Origin': '*' },})
         }

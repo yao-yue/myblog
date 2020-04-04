@@ -34,6 +34,8 @@ package.json  这样配置方便一些，把2个合并成了一个
   }
 }
 ```
+[next部署参考](https://segmentfault.com/a/1190000012774650)
+[react单页应用部署](https://segmentfault.com/a/1190000012675012)
 PM2其实不复杂。pm2是nodejs的一个带有负载均衡功能的应用进程管理器的模块，类似有Supervisor，forever，用来进行进程管理。
 - 进入对应的应用目录
 - pm2 start npm --name "my-next" -- run build
@@ -46,3 +48,8 @@ pm2 reload []
 pm2 restart []
 pm2 delete []
 pm2 --help
+
+
+### 一个小坑
+let ipUrl = 'http://182.92.184.154/:9999/default/' 
+请求接口要写具体的主机号，不然会产生跨域问题
