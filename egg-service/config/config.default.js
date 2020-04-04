@@ -40,13 +40,13 @@ module.exports = appInfo => {
   }
   config.cors = {
     // origin: '*',
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3880',
     credentials: true,   //允许跨域携带cookie
     allowMethods: 'GET,PUT,DELETE,POST,OPTIONS'
   }
   config.cluster = {
     lsiten: {
-      port: 8090,
+      port: 9999,
       hostname: '127.0.0.1',
     }
   }

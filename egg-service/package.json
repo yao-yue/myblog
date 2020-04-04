@@ -25,7 +25,7 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --port=8090 --ignore-stderr",
+    "start": "egg-scripts start --daemon --port=9999 --ignore-stderr",
     "stop": "egg-scripts stop ",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
