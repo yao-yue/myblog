@@ -17,7 +17,11 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1585920278493_6423';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = ['setOrigin'];
+  config.setOrigin = {
+    whiteList: ['http://localhost:3001','http://localhost:3666'],
+  }
+
 
   //mysql配置
   config.mysql = {
@@ -40,10 +44,11 @@ module.exports = appInfo => {
   }
   config.cors = {
     // origin: '*',
-    origin: 'http://localhost:3001',
+    // origin: 'http://localhost:3001',
     credentials: true,   //允许跨域携带cookie
     allowMethods: 'GET,PUT,DELETE,POST,OPTIONS'
   }
+
   config.cluster = {
     lsiten: {
       port: 9999,

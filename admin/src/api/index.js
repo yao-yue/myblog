@@ -1,6 +1,6 @@
 import ajax from './ajax'
 
-const BASE = 'http://182.92.184.154:9999/admin'
+const BASE = 'http://127.0.0.1:7001/admin'
 
 // 请求二次封装
 
