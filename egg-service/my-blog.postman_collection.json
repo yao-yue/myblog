@@ -1,0 +1,451 @@
+{
+	"info": {
+		"_postman_id": "f5a9e446-d2d8-4153-ab7b-e829e27ddb6a",
+		"name": "my-blog",
+		"description": "我的博客中台接口   前台请求接口   后台请求接口",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "前台- 请求博客首页",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/default/index",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"default",
+						"index"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "前台- 请求博客首页",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7001/default/index",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7001",
+							"path": [
+								"default",
+								"index"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "x-xss-protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "x-download-options",
+							"value": "noopen"
+						},
+						{
+							"key": "x-readtime",
+							"value": "28"
+						},
+						{
+							"key": "keep-alive",
+							"value": "timeout=5"
+						},
+						{
+							"key": "content-length",
+							"value": "2097"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 30 Mar 2020 12:19:08 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"title\": \"震惊！前端王子月薪百万！！\",\n    \"type\": \"广告\",\n    \"introduce\": \"骗人的，标题党\",\n    \"content\": \" 不过话说完后，自己也陷入了迟疑中，态度变得有些犹豫不定了。\\r\\n\\r\\n    杨真和康煞也陷入了思索，实在是人数上和启动的巨灵神上存在的各种变数太大了。\\r\\n\\r\\n    李如烟看出三人也发现了问题所在，“来了两人，失踪了十一人，却只启动了三只巨灵神离开，囚室现场也没有留下任何有用的线索，难道只是虚晃一枪只为了抢劫巨灵神？\\r\\n\\r\\n    现在的问题是，我们根本搞不清他们有没有救人，或救走了多少人。凶手人力有限，在如此环境下还能从容不迫作案，并故布疑阵。既然是有意故布疑阵不留下线索，那现场的那些战甲也可能是故意脱了一部分下来。二爷，我们这次真的遇上了真正的高手！”\\r\\n\\r\\n    杨真的目光变得深沉，“荡魔宫我们经营多年，我不信这里能够出那么多叛徒，集体叛变的事情还从未有过！进来了两个人，就算加上些许叛徒，又怎么能将现场那么多人给屠杀，还不留下什么打斗痕迹，神仙境修士也有些，不至于反抗之下连一点痕迹都没有，怎么做到的？难道是来了无量境界的高手不成？”\\r\\n\\r\\n    李如烟：“修为想突破到无量境，已不是仅凭勤修苦练能做到的，天赋和机缘缺一不可。无量境的高手屈指可数，就那么几个人，不太可能。最大的可能反倒是内奸下毒了，令这里人提前失去了反抗能力，除此外我想不出还能有什么办法在不留下打斗痕迹的情况下快速灭了这么多高手。不说是不是下毒，仅凭能把所有人给召集到此，除了坐镇这里的左啸从有那权力，也没了别人，结合云少珺的异常失踪，左啸从是内奸无疑了，这是目前唯一能肯定的。”\\r\\n\\r\\n    康煞闻言神色黯然，悲戚出声，“我不明白他为什么要背叛，我信任倚重于他，待他不薄啊！”\"\n}"
+				}
+			]
+		},
+		{
+			"name": "前台-获取文章列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/default/getArticleList",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"default",
+						"getArticleList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "前台-通过文章Id请求文章",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/default/getArticleById/99",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"default",
+						"getArticleById",
+						"99"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "前台-获取文章所有类型",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/default/getTypeInfo",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"default",
+						"getTypeInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "前台-通过文章类型id来获取该类型的所有文章",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/default/getListById/99",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"default",
+						"getListById",
+						"99"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "后台-登录接口",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/admin/checkLogin",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"admin",
+						"checkLogin"
+					]
+				},
+				"description": "x-www-formdata-urlencoded\n{\n\tusername,\n\tpassword,\n}\n"
+			},
+			"response": []
+		},
+		{
+			"name": "后台-获取文章类型",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/admin/getTypeInfo",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"admin",
+						"getTypeInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "后台-添加文章",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"type_id\":99,\n\"title\":\"44444444444444444444444444444444\",\n\"article_content\":\"11111111111111111111111\",\n\"introduce\":\"222222222222222222222222222\",\n\"addTime\":1585572487,\n\"view_count\":99\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/admin/addArticle",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"admin",
+						"addArticle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "后台-根据文章id修改文章",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"type_id\":99,\n\"title\":\"modify------我修改了\",\n\"article_content\":\"11111111111111111111111\",\n\"introduce\":\"222222222222222222222222222\",\n\"addTime\":1585572487,\n\"view_count\":99999\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/admin/updateArticle/101",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"admin",
+						"updateArticle",
+						"101"
+					]
+				},
+				"description": "{\n\"type_id\":99,\n\"title\":\"modify------我修改了\",\n\"article_content\":\"11111111111111111111111\",\n\"introduce\":\"222222222222222222222222222\",\n\"addTime\":1585572487,\n\"view_count\":99999\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "后台获取文章列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/admin/getArticleList",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"admin",
+						"getArticleList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "后台-删除文章/id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/admin/delArticle/102",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"admin",
+						"delArticle",
+						"102"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "后台-通过id获取文章",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7001/admin/getArticleById/101",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7001",
+					"path": [
+						"admin",
+						"getArticleById",
+						"101"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
