@@ -1,6 +1,6 @@
 // 统一整合起来 方便以后统一管理
 
-let ipUrl = 'http://127.0.0.1:9999/default/' 
+let ipUrl = 'https://rect.red/default/' 
 
 let servicePath = {
     getArticleList:ipUrl + 'getArticleList' ,  //  首页文章列表接口

@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "start": "next -p 3666",
     "build": "next build",
-    "export": "next export"
+    "start": "next start -p 3777"
   },
   "dependencies": {
     "@ant-design/icons": "^4.0.5",

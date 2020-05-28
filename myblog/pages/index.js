@@ -91,7 +91,11 @@ Home.getInitialProps = async () => {
       (res) => {
         resolve(res.data)
       }
-    )
+    ).catch(err => {
+      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+      console.log(err)
+      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+    })
   })
 
   return await promise
